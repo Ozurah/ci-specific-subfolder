@@ -34,6 +34,8 @@ jobs:
               - 'B/**'
             CFolder:
               - 'C/**'
+            OutsideCFolder:
+              - '!C/**'
           
 
       - name: Step A
@@ -47,3 +49,7 @@ jobs:
       - name: Step C
         if: steps.changes.outputs.CFolder == 'true'
         run: echo "C"
+
+      - name: Step outside C
+        if: steps.changes.outputs.OutsideCFolder == 'true'
+        run: echo "at least 1 not in C"
