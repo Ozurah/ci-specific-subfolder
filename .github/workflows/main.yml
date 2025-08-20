@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: CI
+name: CI speficic Step
 
 # Controls when the workflow will run
 on:
@@ -24,12 +24,26 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v3
+        id: changes
+        with:
+          filters: |
+            AFolder:
+              - 'A/**'
+            BFolder:
+              - 'B/**'
+            CFolder:
+              - 'C/**'
+          
 
       - name: Step A
+        if: steps.changes.outputs.AFolder == 'true'
         run: echo "A"
 
       - name: Step B
+        if: steps.changes.outputs.BFolder == 'true'
         run: echo "B"
 
       - name: Step C
+        if: steps.changes.outputs.CFolder == 'true'
         run: echo "C"
